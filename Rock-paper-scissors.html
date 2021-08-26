@@ -1,13 +1,57 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <script src='rock-paper-scissors.js'></script>
+    <link rel="stylesheet" href="rock-paper-scissors.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@200&display=swap" rel="stylesheet">
+    <script src='rock-paper-scissors.js' defer></script>
 </head>
+
 <body>
+    <div class="winEventBox winEvent visible">
+        <div class="winEvent visible" id="message"></div>
+        <div class="winEvent visible">
+            <button class="winEvent visible" id="playBtn" type="button" value="Play again?">Play again?</button>
+        </div>
+        
+    </div>
+
+    <div class="container">
+
+
+        <div class="head"><span>Rock! Paper! Scissors!</span></div>
     
+        <div class="hands">
+            <div class="left"><img id="L" src="images/open.png" alt=""></div>
+            <div class="right"><img id="R" src="images/open-r.png" alt=""></div>
+        </div>
+        <div>            
+            <div class="scoring">
+                <div id="scores">0 : 0</div>
+                <div id="winAt">First to 5 wins</div>
+            </div>            
+        </div>
+        <div>            
+            <div class="containerBtns">
+                <div class=""><button type="button" class="btn" id="rock">Rock</button></div>
+                <div class=""><button type="button" class="btn" id="paper">Paper</button></div>
+                <div class=""><button type="button" class="btn" id="scissors">Scissors</button></div>
+            </div> 
+                    
+        </div>
+            <div class="foot"></div>
+    </div>   
+    
+        
+    
+    </div>
+    <div class="overlay visible"id="overlay"></div>
 </body>
+
 </html>
