@@ -1,46 +1,59 @@
-console.log("test")
+const rock = "rock";
+const paper = "paper";
+const scissors = "scissors";
+const choices = [rock, paper, scissors, rock];
+let playerScore = 0;
+let cpuScore = 0;
+const btns = document.querySelectorAll('.btn');
+btns.forEach(item => item.addEventListener('click', playRound));
 
+const winEvent = document.querySelectorAll('.winEvent');
+const overlay = document.querySelector('.overlay');
+const playBtn = document.querySelector('#playBtn');
+playBtn.addEventListener('click', playAgain);
 
-const    rockBeatenBy = "paper";
-const   paperBeatenBy = "scissors"; 
-const sissorsBeatenBy = "rock";
-
-const         choices = [rockBeatenBy,paperBeatenBy,sissorsBeatenBy]; // This beats this list
-const           draws = [paperBeatenBy,sissorsBeatenBy,rockBeatenBy]; // Moves one in array to follow win/lose pattern to Draw
-const           lost  = [sissorsBeatenBy,rockBeatenBy,paperBeatenBy]; // Moves one more in array to Lost
-
-//ask the user to enter a selection RPS1
-function playerPlay(){
-    select = prompt("Rock? Paper? Scissor?");
-    select = select.toLowerCase();
+function declareWinner() {
+    document.querySelector('#L').src = `images/open.png`;
+    document.querySelector('#R').src = `images/open-r.png`;
+    let winner = (playerScore === 5) ? "won!" : "lost!";
+    document.querySelector('#message')
+            .textContent = `You ${winner}`;
+    winEvent.forEach(item => item.classList.remove('visible'));
+    overlay.classList.remove('visible');
+}
+function playAgain() {
+    winEvent.forEach(item => item.classList.add('visible'));
+    overlay.classList.add('visible');
+    playerScore = 0;
+    cpuScore = 0;
+    showScore();
+}
+function showScore() {
+    const scores = document.querySelector('#scores');
+    scores.textContent = `${playerScore} : ${cpuScore}`;
+}
+function cpuPlay() {
+    let select = choices[ranNum];
     return select;
 }
-
-//P2 selects RPS from this beats this list. 
-function compPlay(){
-        let select = choices [ranNum];
-    return select;
-} 
- 
- function round(){
-    ranNum = Math.floor(Math.random()*3);
-    computerSelection = compPlay();
-    playerSelection = playerPlay();
-    console.log(playerSelection, lost [ranNum]);
-
-    if (computerSelection === playerSelection){ //check if player beats computer choice is true for win
-    console.log(`You won ${playerSelection} beats ${lost[ranNum]}!`)
-    }else if(playerSelection != draws[ranNum]){ //if no match move array -1 and re check for match.
-          console.log("A tie!");     
-    }else{console.log(`You lost :( ${lost[ranNum]} beats ${playerSelection}`)}  
- }
-
- function game(){
-    for (let i=0; i<5; ++i) { 
-        round();}       
- }
-
- game();
-
-
-//add score to winner
+function playRound() {
+    if (playerScore === 5 || cpuScore === 5) { return }
+    ranNum = Math.floor(Math.random() * 3);
+    cpuChoice = cpuPlay();
+    playerChoice = this.id
+    document.querySelector('#L').src = `images/${playerChoice}.png`;
+    document.querySelector('#R').src = `images/${cpuChoice}-r.png`;
+    compareChoices();
+}
+function compareChoices(){
+    if (cpuChoice === playerChoice) {//draw     
+    } else if (playerChoice === choices[ranNum + 1]) { //winners choice always 1 in front of losers choice.              
+        ++playerScore;
+    } else {
+        ++cpuScore;
+    }
+    showScore();
+    if (playerScore === 5 || cpuScore === 5) {
+        declareWinner();
+    }
+}
