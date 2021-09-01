@@ -1,57 +1,59 @@
-const     rock = "rock";
-const    paper = "paper"; 
-const scissors = "scissors";                   
-const  choices = [rock,paper,scissors,rock];
+const rock = "rock";
+const paper = "paper";
+const scissors = "scissors";
+const choices = [rock, paper, scissors, rock];
 let playerScore = 0;
-let cpuScore   = 0;
+let cpuScore = 0;
 const btns = document.querySelectorAll('.btn');
-btns.forEach(item => item.addEventListener('click', round));
-const winEvent = document.querySelectorAll('.winEvent');
-let playBtn = document.querySelector('#playBtn');
-playBtn.addEventListener('click', playAgain);
-let overlay = document.querySelector('.overlay');
+btns.forEach(item => item.addEventListener('click', playRound));
 
-function declareWinner(){    
+const winEvent = document.querySelectorAll('.winEvent');
+const overlay = document.querySelector('.overlay');
+const playBtn = document.querySelector('#playBtn');
+playBtn.addEventListener('click', playAgain);
+
+function declareWinner() {
     document.querySelector('#L').src = `images/open.png`;
     document.querySelector('#R').src = `images/open-r.png`;
-    const winner = (playerScore === 5) ? "won!" : "lost!";    
-        const winEventMessage = document.querySelector('#message');    
-        winEventMessage.textContent = `You ${winner}`;       
-    winEvent.forEach(item => item.classList.remove('visible'));   
-    overlay.classList.remove('visible');    
+    let winner = (playerScore === 5) ? "won!" : "lost!";
+    document.querySelector('#message')
+            .textContent = `You ${winner}`;
+    winEvent.forEach(item => item.classList.remove('visible'));
+    overlay.classList.remove('visible');
 }
-function playAgain(){    
+function playAgain() {
     winEvent.forEach(item => item.classList.add('visible'));
-    overlay.classList.add('visible');    
+    overlay.classList.add('visible');
     playerScore = 0;
-    cpuScore = 0;    
-    updateScore();
+    cpuScore = 0;
+    showScore();
 }
-function updateScore(){
+function showScore() {
     const scores = document.querySelector('#scores');
-    scores.textContent = `${playerScore} : ${cpuScore}`; 
+    scores.textContent = `${playerScore} : ${cpuScore}`;
 }
-function compPlay(){
-    let select = choices [ranNum];
+function cpuPlay() {
+    let select = choices[ranNum];
     return select;
 }
- function round(){
-    if(playerScore === 5 || cpuScore === 5){return}     
-    ranNum = Math.floor(Math.random()*3);    
-    cpuSelection = compPlay();
-    plySelection = this.id    
-    document.querySelector('#L').src = `images/${plySelection}.png`;
-    document.querySelector('#R').src = `images/${cpuSelection}-r.png`;   
-    if (cpuSelection === plySelection){//draw do something..     
-        }else if(plySelection === choices[ranNum+1]){ //wining pick always 1 in front of loser pick.  
-            console.log
-            ++playerScore;
-            updateScore();
-        }else{
-             ++cpuScore;
-             updateScore();
-            }         
-        if(playerScore === 5 || cpuScore === 5){
-             declareWinner();        
-            } 
-        }
+function playRound() {
+    if (playerScore === 5 || cpuScore === 5) { return }
+    ranNum = Math.floor(Math.random() * 3);
+    cpuChoice = cpuPlay();
+    playerChoice = this.id
+    document.querySelector('#L').src = `images/${playerChoice}.png`;
+    document.querySelector('#R').src = `images/${cpuChoice}-r.png`;
+    compareChoices();
+}
+function compareChoices(){
+    if (cpuChoice === playerChoice) {//draw     
+    } else if (playerChoice === choices[ranNum + 1]) { //winners choice always 1 in front of losers choice.              
+        ++playerScore;
+    } else {
+        ++cpuScore;
+    }
+    showScore();
+    if (playerScore === 5 || cpuScore === 5) {
+        declareWinner();
+    }
+}
